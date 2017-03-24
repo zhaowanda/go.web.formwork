@@ -1,7 +1,7 @@
 package config
 
 import (
-	"yaml"
+	"github.com/zhaowanda/go.web.formwork/yaml"
 	//"os/exec"
 	"os"
 )
