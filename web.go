@@ -6,6 +6,7 @@ import (
 	"os"
 	"github.com/zhaowanda/go.web.formwork/web/router"
 	"github.com/zhaowanda/go.web.formwork/yaml"
+        "github.com/zhaowanda/go.web.formwork/config"
 )
 
 //  binlog 同步web配置端
