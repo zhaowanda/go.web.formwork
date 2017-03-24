@@ -1,12 +1,11 @@
 package web
 
 import (
-	"config"
 	fast "github.com/valyala/fasthttp"
 	"log"
 	"os"
-	"web/router"
-	"yaml"
+	"github.com/zhaowanda/go.web.formwork/web/router"
+	"github.com/zhaowanda/go.web.formwork/yaml"
 )
 
 //  binlog 同步web配置端
