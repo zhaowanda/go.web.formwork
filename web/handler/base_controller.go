@@ -4,8 +4,8 @@ import (
 	"errors"
 	"github.com/bitly/go-simplejson"
 	fast "github.com/valyala/fasthttp"
-	"web/convert"
-	"web/interceptor"
+	"github.com/zhaowanda/go.web.formwork/web/convert"
+	"github.com/zhaowanda/go.web.formwork/web/interceptor"
 )
 
 // 请求之前执行拦截
