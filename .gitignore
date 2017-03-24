@@ -15,6 +15,7 @@ hs_err_pid*
 logs/
 *.log
 .DS_Store
-
+pkg/
+src/github.com/
 bin/
 
