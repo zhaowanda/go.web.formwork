@@ -41,30 +41,9 @@ type InterceptorBean struct {
 	excludePatterns *list.List
 }
 
-// 初始化方法
-func init() {
-	//  注册所有拦截器
-	Register("authInterceptor", InterceptorBean{
-		Interceptor: authInterceptor,
-	})
-	//log.Println("authInterceptor")
-}
-
 // 拦截器的实现
 func (fn InterceptorFunc) Intercept(ctx *fast.RequestCtx) (bool, error) {
 	return fn(ctx)
-}
-
-// 权限拦截器
-func authInterceptor(ctx *fast.RequestCtx) (bool, error) {
-
-	postHead := string(ctx.Request.Header.Peek("Machine-Post-Head"))
-	if strings.EqualFold(postHead, MachinePostHead) {
-		return true, nil
-	} else {
-		// todo 走正常的权限校验逻辑
-		return false, errors.New("请加入正确的HEADER")
-	}
 }
 
 // 注册单个interceptor

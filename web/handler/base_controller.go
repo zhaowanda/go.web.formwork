@@ -8,6 +8,38 @@ import (
 	"github.com/zhaowanda/go.web.formwork/web/interceptor"
 )
 
+var(
+	ControllerBean = ExecuteInterceptorBean{
+		BeforeFunc: ExecuteInterceptorBefore(before),
+		AfterFunc: ExecuteInterceptorAfter(after),
+	}
+)
+
+type ExecuteInterceptor interface {
+	Before(ctx *fast.RequestCtx) (bool, error)
+	After(ctx *fast.RequestCtx, args interface{}, errMsg error)
+}
+
+type ExecuteInterceptorBefore func(ctx *fast.RequestCtx) (bool, error)
+
+type ExecuteInterceptorAfter func(ctx *fast.RequestCtx, args interface{}, errMsg error)
+
+// 定义controller前后的拦截
+type ExecuteInterceptorBean struct {
+	BeforeFunc ExecuteInterceptorBefore
+	AfterFunc ExecuteInterceptorAfter
+	BeforeMethod string
+	AfterMethod string
+}
+//  实现前置拦截接口
+func (eib ExecuteInterceptorBean) Before(ctx *fast.RequestCtx) (bool, error) {
+	return eib.BeforeFunc(ctx)
+}
+//  实现后置拦截接口
+func (eib ExecuteInterceptorBean) After(ctx *fast.RequestCtx, args interface{}, errMsg error) {
+	eib.AfterFunc(ctx, args, errMsg)
+}
+
 // 请求之前执行拦截
 func before(ctx *fast.RequestCtx) (bool, error) {
 	entity, ok := interceptor.GetInterceptor("authInterceptor")
@@ -40,17 +72,15 @@ func (bcf BaseControllerFunc) BaseController(ctx *fast.RequestCtx, execute Execu
 
 // 执行controller中的业务逻辑
 func baseController(ctx *fast.RequestCtx, execute ExecuteFunc) {
-	flag, err := before(ctx)
+	flag, err := ControllerBean.Before(ctx)
 	if flag {
-		// todo 执行业务逻辑
-		//execute()
 		param, err := convert.ArgumentResolver(ctx)
 		if err != nil {
 			after(ctx, nil, err)
 			return
 		}
 		result, error := execute(param)
-		after(ctx, result, error)
+		ControllerBean.After(ctx, result, error)
 		return
 	}
 	after(ctx, nil, err)
