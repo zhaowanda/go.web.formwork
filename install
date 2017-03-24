@@ -12,7 +12,7 @@ export GOPATH="$CURDIR"
 
 gofmt -w src
 
-go install web
+go install web/webrouter
 
 export GOPATH="$OLDGOPATH"
 echo 'finished'

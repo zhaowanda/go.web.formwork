@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-var(
+var (
 	ConfigCache = make(map[string]interface{})
 )
 

@@ -1,13 +1,13 @@
 package interceptor
 
 import (
-	fast "github.com/valyala/fasthttp"
-	"strings"
-	"errors"
-	"log"
-	"fmt"
 	"container/list"
+	"errors"
+	"fmt"
+	fast "github.com/valyala/fasthttp"
+	"log"
 	"net/url"
+	"strings"
 )
 
 const (
@@ -26,6 +26,7 @@ type Interceptor interface {
 }
 
 type InterceptorFunc func(ctx *fast.RequestCtx) (bool, error)
+
 //  拦截url接口
 type Patterns interface {
 	AddIncludePattern(name string, pattern string) InterceptorBean
@@ -35,10 +36,11 @@ type Patterns interface {
 
 //  interceptor entity
 type InterceptorBean struct {
-	Interceptor InterceptorFunc
+	Interceptor     InterceptorFunc
 	includePatterns *list.List
 	excludePatterns *list.List
 }
+
 // 初始化方法
 func init() {
 	//  注册所有拦截器
@@ -52,6 +54,7 @@ func init() {
 func (fn InterceptorFunc) Intercept(ctx *fast.RequestCtx) (bool, error) {
 	return fn(ctx)
 }
+
 // 权限拦截器
 func authInterceptor(ctx *fast.RequestCtx) (bool, error) {
 
@@ -65,7 +68,7 @@ func authInterceptor(ctx *fast.RequestCtx) (bool, error) {
 }
 
 // 注册单个interceptor
-func Register(name string, interceptor InterceptorBean)  {
+func Register(name string, interceptor InterceptorBean) {
 	_, interceptors := interceptorFactory[name]
 	if interceptors {
 		log.Println(fmt.Sprintf("InterceptorBean named %s already registered", name))
@@ -73,18 +76,21 @@ func Register(name string, interceptor InterceptorBean)  {
 		interceptorFactory[name] = interceptor
 	}
 }
+
 // 批量注册interceptor
-func Registers(interceptors map[string]InterceptorBean)  {
-	for key, value := range interceptors  {
+func Registers(interceptors map[string]InterceptorBean) {
+	for key, value := range interceptors {
 		Register(key, value)
 	}
 }
+
 // 获取interceptor
 func GetInterceptor(name string) (InterceptorBean, bool) {
 	interceptor, ok := interceptorFactory[name]
 	return interceptor, ok
 
 }
+
 // 添加需要拦截的url
 func (ib InterceptorBean) AddIncludePattern(name string, pattern string) InterceptorBean {
 	interceptor, ok := GetInterceptor(name)
@@ -101,6 +107,7 @@ func (ib InterceptorBean) AddIncludePattern(name string, pattern string) Interce
 	interceptorFactory[name] = interceptor
 	return interceptor
 }
+
 // 添加不需要拦截的url
 func (ib InterceptorBean) AddExcludePattern(name string, pattern string) InterceptorBean {
 	interceptor, ok := GetInterceptor(name)
@@ -118,6 +125,7 @@ func (ib InterceptorBean) AddExcludePattern(name string, pattern string) Interce
 	interceptorFactory[name] = interceptor
 	return interceptor
 }
+
 // 拦截执行器
 func (ib InterceptorBean) ExecutedInterceptor(ctx *fast.RequestCtx, interceptor InterceptorBean) (bool, error) {
 	ctx.Request.URI()
@@ -171,5 +179,3 @@ func (ib InterceptorBean) ExecutedInterceptor(ctx *fast.RequestCtx, interceptor 
 	flag, err := interceptFunc.Intercept(ctx)
 	return flag, err
 }
-
-

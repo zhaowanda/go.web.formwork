@@ -1,14 +1,13 @@
 package main
 
 import (
-	"web"
-	"web/router"
-	"web/handler"
+	"config"
 	"log"
 	"os"
-	"config"
+	"web"
+	"web/handler"
+	"web/router"
 )
-
 
 func main() {
 	//canalgo.Main()
@@ -18,7 +17,6 @@ func main() {
 	}
 	web.WebMain()
 }
-
 
 // 初始化业务逻辑中的 url 及 handler
 func init() {

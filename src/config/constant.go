@@ -8,6 +8,5 @@ import (
 
 var (
 	execDirAbsPath, _ = os.Getwd()
-	YamlConfig, Err = yaml.InitYamlConfig(execDirAbsPath + "/src/application.yaml")
+	YamlConfig, Err   = yaml.InitYamlConfig(execDirAbsPath + "/src/application.yaml")
 )
-

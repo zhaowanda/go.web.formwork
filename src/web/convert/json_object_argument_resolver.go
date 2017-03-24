@@ -1,13 +1,14 @@
 package convert
 
 import (
+	"errors"
 	simplejson "github.com/bitly/go-simplejson"
 	fast "github.com/valyala/fasthttp"
+	"helper"
 	"net/url"
 	"strings"
-	"errors"
-	"helper"
 )
+
 // 参数转换成json
 func ArgumentResolver(ctx *fast.RequestCtx) (*simplejson.Json, error) {
 	param := simplejson.New()
@@ -50,6 +51,7 @@ func ArgumentResolver(ctx *fast.RequestCtx) (*simplejson.Json, error) {
 	}
 
 }
+
 // 解析request param参数
 func parseParam(param string, regexp string) []string {
 	return strings.Split(param, regexp)

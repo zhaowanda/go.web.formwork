@@ -1,12 +1,12 @@
 package web
 
 import (
+	"config"
 	fast "github.com/valyala/fasthttp"
 	"log"
+	"os"
 	"web/router"
 	"yaml"
-	"config"
-	"os"
 )
 
 //  binlog 同步web配置端
@@ -20,4 +20,3 @@ func WebMain() {
 	}
 	log.Fatal(fast.ListenAndServe(ipAddr.(string), webrouter.InitRouter().Handler))
 }
-
