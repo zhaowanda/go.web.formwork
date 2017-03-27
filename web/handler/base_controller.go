@@ -46,7 +46,7 @@ func before(ctx *fast.RequestCtx) (bool, error) {
 	if !ok {
 		return false, errors.New("请检查系统配置")
 	}
-	entity = entity.AddExcludePattern("authInterceptor", "/hello")
+	//entity = entity.AddExcludePattern("authInterceptor", "/hello")
 	flag, err := entity.ExecutedInterceptor(ctx, entity)
 	return flag, err
 }
