@@ -2,9 +2,9 @@ server:
   boot:
     ListenAndServe: 127.0.0.1:8080
   web:
-    interceptor:
-      name:
-      includePatterns:
-      excludePatterns:
+    interceptors:
+        name:
+        includePatterns:
+        excludePatterns:
 
 

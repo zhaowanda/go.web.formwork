@@ -65,5 +65,6 @@ func GetConfig(conf string, config *ConfigHelper) (interface{}, error) {
 			result = obj
 		}
 	}
+	ConfigCache[conf] = result
 	return result, nil
 }
