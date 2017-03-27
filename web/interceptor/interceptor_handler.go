@@ -48,6 +48,7 @@ func Register(name string, interceptor InterceptorBean) {
 	if interceptors {
 		log.Println(fmt.Sprintf("InterceptorBean named %s already registered", name))
 	} else {
+		interceptor.excludePatterns
 		interceptorFactory[name] = interceptor
 	}
 }
