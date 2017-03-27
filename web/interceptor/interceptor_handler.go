@@ -9,11 +9,7 @@ import (
 	"net/url"
 	"strings"
 )
-
-const (
-	MachinePostHead = "machine"
-)
-
+// 初始化拦截器存储地方
 var (
 	interceptorFactory = make(map[string]InterceptorBean)
 )

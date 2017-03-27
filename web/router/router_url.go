@@ -5,7 +5,7 @@ import (
 	fast "github.com/valyala/fasthttp"
 	"strings"
 )
-
+// 初始化router url cache
 var (
 	POST     = "post"
 	GET      = "get"
