@@ -56,6 +56,10 @@ func GetConfig(conf string, config *ConfigHelper) (interface{}, error) {
 	for _, value := range arr {
 		if strings.EqualFold(reflect.Map.String(), reflect.TypeOf(obj).Kind().String()) {
 			object := obj[value]
+			if object == nil {
+				result = ""
+				continue
+			}
 			if strings.EqualFold(reflect.Map.String(), reflect.TypeOf(object).Kind().String()) {
 				obj = object.(map[string]interface{})
 				result = obj
